@@ -1,0 +1,9 @@
+Conventions des brainstorm et organisation:
+- Le chiffre devant le nom des txt sert a les classer dans le bon ordre.
+- Current status: Actualites et messages sur le cours des choses...
+- 
+
+
+Conventions de code:
+- Les '{' pas a la ligne svp!
+- Commenter !

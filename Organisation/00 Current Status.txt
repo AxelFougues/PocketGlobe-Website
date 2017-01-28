@@ -1,2 +1,28 @@
 Vos idees ici:
-Je vais commencer le cahier des charges etc... hesitez pas a me proposer des modifs ici...
+
+Principe : 
+Consulter et ajouter des fiches sur un lieu
+
+Au lancement, une map avec les points par position de chaque fiche
+
+	Composition d'une fiche :
+		-Titre
+		-Description
+		-Position (avec liens vers carte)
+		-(Photos)
+		-Activité à faire
+		-Lieux remarquables
+		-Case Fait ou pas Fait
+		-Dates visites si fait
+		-Date de prévisions 
+		-Accessibilité (avec des logos)
+		-Note (étoiles ou note /20)
+
+Partage réseau sociaux (page site?)(Juste texte?)	
+Synchronisation Google ? Ou compte perso ?
+
+
+Design : Material Design	
+
+PLUS TARD : Partage des fiches avec les autres utilisateurs 
+Avis des utilisateurs

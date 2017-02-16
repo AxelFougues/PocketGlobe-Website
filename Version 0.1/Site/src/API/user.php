@@ -6,7 +6,11 @@
 
     $bdd = connexion();
 
-    $URI = explode('/', trim($_SERVER['PATH_INFO'],'/'));
+    if(isset($_SERVER['PATH_INFO'])) {
+        $URI = explode('/', trim($_SERVER['PATH_INFO'], '/'));
+    } else {
+        $URI = array();
+    }
 
     $data = array();
     parse_str(file_get_contents('php://input'), $data);
@@ -47,15 +51,18 @@
 
     function getById($bdd, $URI) { // Récupérer le tuple d'user
         
-        $id = array_shift($URI);
+        $id_user = array_shift($URI);
 
 
-        if (isset($id)) { // En fonction de l'id
-            
-            $requete = $bdd->query("SELECT * FROM user WHERE id_user = '$id'");
+        if (isset($id_user)) { // En fonction de l'id
+
+            $requete = "SELECT * FROM user WHERE id_user = :id_user";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array(':id_user'=>$id_user));
             $user = $requete->fetch(PDO::FETCH_ASSOC);
             $json = json_encode($user);
-            if ($json == 'false') {
+
+            if ($json == false) {
                 echo 'NULL';
             } else {
                 echo $json;
@@ -72,11 +79,14 @@
         $nickname = array_shift($URI);
 
         if (isset($nickname)) { // En fonction du nickname
-            
-            $requete = $bdd->query("SELECT * FROM user WHERE nickname = '$nickname'");
+
+            $requete = "SELECT * FROM user WHERE nickname = :nickname";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array(':nickname'=>$nickname));
             $user = $requete->fetch(PDO::FETCH_ASSOC);
             $json = json_encode($user);
-            if ($json == 'false') {
+
+            if ($json == false) {
                 echo 'NULL';
             } else {
                 echo $json;
@@ -87,20 +97,25 @@
         }
     }
 
-
     function post($bdd) {
-        
-        if (isset($_POST['nickname'], $_POST['password'])) {
-            
+
+        if (isset($_POST['nickname'], $_POST['mail'], $_POST['password'])) {
+
             $nickname = $_POST['nickname'];
+            $mail = $_POST['mail'];
             $password = $_POST['password'];
-            
-            $requete = $bdd->query("SELECT count(*) as nb FROM user WHERE nickname = '$nickname'");
+
+            $requete = "SELECT count(*) as nb FROM user WHERE nickname = :nickname";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array('nickname' => $nickname));
             $nb = $requete->fetch(PDO::FETCH_ASSOC);
             
             if ($nb['nb'] == 0) {
-                
-                $bdd->exec("INSERT INTO user VALUES ( NULL, '$nickname', '$password')");
+
+                $requete = "INSERT INTO user VALUES ( NULL, :nickname, :mail, :password)";
+                $requete = $bdd->prepare($requete);
+                $requete->execute(array('nickname'=>$nickname, 'mail'=>$mail, 'password'=>$password));
+
                 echo 'DONE';
 
             } else {
@@ -116,9 +131,15 @@
 
         if (isset($dataPut['id_user'])) {
             $id_user = $dataPut['id_user'];
+
             foreach ($dataPut as $key => $value) {
+                //echo $key;
                 if ($key != 'id_user') {
-                    $bdd->exec("UPDATE user SET $key = '$value' where id_user = $id_user");
+                    echo $key;
+                    $requete = "UPDATE user SET $key = :v WHERE id_user = :id_user";
+                    $requete = $bdd->prepare($requete);
+                    $executed = $requete->execute(array(':v'=>$value, ':id_user'=>$id_user));
+                    echo $executed;
                 }
             }
             echo 'DONE';
@@ -126,7 +147,8 @@
             echo 'NULL';
         }
     }
-    
+
+    //A faire après, delete en cascade
     function delete($bdd, $dataDelete) {
 
         if (isset($dataDelete['id_user'])) {

@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="pocketGlobe">
-<head>
-    <meta charset="UTF-8">
-    <title>Pocket Globe</title>
-    <script src="js/angular/angular.js"></script>
-    <script src="index.js"></script>
-</head>
-<body ng-controller="test">
-{{response}}
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Pocket Globe</title>
+        <script src="lib/angular/angular.js"></script>
+        <script src="index.js"></script>
+        <script src="Controllers/indexController.js"></script>
+    </head>
+
+    <body ng-controller="index">
+
+        {{response}}
+
+        <header>Pocket Globe</header>
+        <div>Menu à gauche</div>
+        <div ng-include="Map">Map</div>
+        <div>Dossier</div>
+        <div ng-include="Fiche"></div>
+    </body>
 </html>

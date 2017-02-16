@@ -6,7 +6,11 @@
 
     $bdd = connexion();
 
-    $URI = explode('/', trim($_SERVER['PATH_INFO'],'/'));
+    if(isset($_SERVER['PATH_INFO'])) {
+        $URI = explode('/', trim($_SERVER['PATH_INFO'], '/'));
+    } else {
+        $URI = array();
+    }
 
     $data = array();
     parse_str(file_get_contents('php://input'), $data);
@@ -42,6 +46,12 @@
             case 'getByUserNickname':
                 getByUserNickname($bdd, $URI);
                 break;
+            case 'getByFolderId':
+                getByFolderId($bdd, $URI);
+                break;
+            case 'getByFolderName':
+                getByFolderName($bdd, $URI);
+                break;
             default:
                 echo 'NULL';
         }
@@ -52,8 +62,10 @@
         $id_fiche = array_shift($URI);
 
         if (isset($id_fiche)) { // En fonction de l'id
-            
-            $requete = $bdd->query("SELECT * FROM fiche WHERE id_fiche = '$id_fiche'");
+
+            $requete = "SELECT * FROM fiche WHERE id_fiche = :id_fiche";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array(':id_fiche'=>$id_fiche));
             $user = $requete->fetch(PDO::FETCH_ASSOC);
             $json = json_encode($user);
             if ($json == 'false') {
@@ -73,13 +85,15 @@
         $id_user = array_shift($URI);
         
         if (isset($id_user)) { // En fonction du nickname
-            
-            $requete = $bdd->query("SELECT * FROM fiche WHERE id_user = '$id_user'");
+
+            $requete = "SELECT * FROM fiche WHERE id_user = :id_user";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array(':id_user'=>$id_user));
             $fiches = $requete->fetchAll(PDO::FETCH_ASSOC);
-            $json = json_encode($fiches);
-            if ($json == 'false') {
+            if (count($fiches) == 0) {
                 echo 'NULL';
             } else {
+                $json = json_encode($fiches);
                 echo $json;
             }   
             
@@ -93,24 +107,84 @@
         $nickname = array_shift($URI);
         
         if (isset($nickname)) { // En fonction du nickname
-            
-            $requete = $bdd->query("SELECT id_user FROM user WHERE nickname = '$nickname'");
-            $user = $requete->fetch(PDO::FETCH_ASSOC);
-            getByUserId($bdd, $user);
-            
+
+            $requete = "SELECT f.* FROM fiche f, user u WHERE u.id_user = f.id_user and u.nickname = :nickname";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array(':nickname'=>$nickname));
+            $fiches = $requete->fetchAll(PDO::FETCH_ASSOC);
+            if (count($fiches) == 0) {
+                echo 'NULL';
+            } else {
+                $json = json_encode($fiches);
+                echo $json;
+            }
+        } else {
+            echo 'NULL';
+        }
+    }
+
+    function getByFolderId($bdd, $URI) {
+
+        $id_folder = array_shift($URI);
+
+        if(isset($id_folder)) {
+
+            $requete = "SELECT * FROM fiche f WHERE id_folder = :id_folder";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array(':id_folder'=>$id_folder));
+            $fiches = $requete->fetchAll(PDO::FETCH_ASSOC);
+            if (count($fiches) == 0) {
+                echo 'NULL';
+            } else {
+                $json = json_encode($fiches);
+                echo $json;
+            }
+        } else {
+            echo 'NULL';
+        }
+    }
+
+    function getByFolderName($bdd, $URI) {
+
+        $name_folder = array_shift($URI);
+
+        if(isset($name_folder)) {
+
+            $requete = "SELECT f.* FROM folder fo, fiche f WHERE fo.id_folder = f.id_folder and fo.name_folder = :name_folder";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array(':name_folder'=>$name_folder));
+            $fiches = $requete->fetchAll(PDO::FETCH_ASSOC);
+            if (count($fiches) == 0) {
+                echo 'NULL';
+            } else {
+                $json = json_encode($fiches);
+                echo $json;
+            }
         } else {
             echo 'NULL';
         }
     }
 
 
+
     function post($bdd) {
-        
-        if (isset($_POST['id_user'], $_POST['titre'], $_POST['description'])) {
+
+        if (isset($_POST['id_user'], $_POST['title'], $_POST['id_folder'], $_POST['visited'])) {
             $id_user = $_POST['id_user'];
-            $titre = $_POST['titre'];
-            $description = $_POST['description'];
-            $bdd->exec("INSERT INTO fiche VALUES ( NULL, '$id_user', '$titre', '$description')");
+            $title = $_POST['title'];
+            $id_folder = $_POST['id_folder'];
+            $visited = $_POST['visited'];
+            $latitude = NULL;
+            $longitude = NULL;
+
+            if(isset($_POST['latitude'], $_POST['longitude'])) {
+                $latitude = $_POST['latitude'];
+                $longitude = $_POST['longitude'];
+            }
+
+            $requete = "INSERT INTO fiche VALUES ( NULL, :id_user, :id_folder, :title, :visited, :latitude, :longitude)";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array(':id_user'=>$id_user, ':id_folder'=>$id_folder, ':title'=>$title, ':visited'=>$visited, ':latitude'=>$latitude, ':longitude'=>$longitude));
             echo 'DONE';
         } else {
             echo 'NULL';
@@ -122,10 +196,14 @@
     function put($bdd, $dataPut) {
 
         if (isset($dataPut['id_fiche'])) {
+
             $id_fiche = $dataPut['id_fiche'];
+
             foreach ($dataPut as $key => $value) {
                 if ($key != 'id_fiche') {
-                    $bdd->exec("UPDATE fiche SET $key = '$value' where id_fiche = $id_fiche");
+                    $requete = "UPDATE fiche SET $key = :v where id_fiche = :id_fiche";
+                    $requete = $bdd->prepare($requete);
+                    $requete->execute(array(':v'=>$value, ':id_fiche'=>$id_fiche));
                 }
             }
             echo 'DONE';

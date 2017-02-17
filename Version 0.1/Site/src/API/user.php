@@ -21,7 +21,7 @@
             get($bdd, $URI);
             break;
         case 'POST':
-            post($bdd);
+            post($bdd, $URI);
             break;
         case 'PUT':
             put($bdd, $data);
@@ -97,17 +97,52 @@
         }
     }
 
-    function post($bdd) {
+    function login($bdd) {
+
+        print_r($_POST);
+        if(isset($_POST['nickname'], $_POST['password'])) {
+            $nickname = $_POST['nickname'];
+            $password = $_POST['password'];
+
+            $requete = "SELECT * from user where nickname = :nickname and password = :password";
+            $requete = $bdd->prepare($requete);
+            $requete->execute(array(':nickname'=>$nickname, ':password'=>$password));
+            $user = $requete->fetch(PDO::FETCH_ASSOC);
+            $json = json_encode($user);
+            if ($json == false) {
+                echo 'NULL';
+            } else {
+                echo $json;
+            }
+
+        } else {
+            echo 'NULL';
+        }
+    }
+
+    function post($bdd, $URI) {
+
+        $func = array_shift($URI);
+        switch ($func) {
+            case 'login':
+                login($bdd);
+                break;
+            default:
+                echo 'NULL';
+        }
+    }
+
+    /*function post($bdd) {
 
         if (isset($_POST['nickname'], $_POST['mail'], $_POST['password'])) {
 
             $nickname = $_POST['nickname'];
             $mail = $_POST['mail'];
             $password = $_POST['password'];
-
-            $requete = "SELECT count(*) as nb FROM user WHERE nickname = :nickname";
+            //A REFAIRE NICKNAME PUIS MAIL
+            $requete = "SELECT count(*) as nb FROM user WHERE nickname = :nickname or mail = :mail";
             $requete = $bdd->prepare($requete);
-            $requete->execute(array('nickname' => $nickname));
+            $requete->execute(array(':nickname' => $nickname, ':mail'=>$mail));
             $nb = $requete->fetch(PDO::FETCH_ASSOC);
             
             if ($nb['nb'] == 0) {
@@ -125,7 +160,7 @@
         } else {
             echo 'NULL';
         }
-    }
+    }*/
 
     function put($bdd, $dataPut) {
 

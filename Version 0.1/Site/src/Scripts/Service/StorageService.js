@@ -10,8 +10,15 @@ angular.module('pocketGlobe').factory('StorageService', ['$localStorage',
                 return $localStorage.user ? $localStorage.user : null;
             },
             setUser: function (user) {
-                if($localStorage.getUser() == null)
+                if(this.getUser() == null) {
                     $localStorage.user = user;
+                    return true;
+                }
+                return false;
+            },
+            removeUser: function () {
+                delete $localStorage.user;
+                return !($localStorage.user);
             }
         };
 }]);

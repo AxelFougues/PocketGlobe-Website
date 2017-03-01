@@ -7,32 +7,52 @@ angular.module('pocketGlobe').factory('UserModel', ['$http', 'StorageService', '
     function ($http, StorageService, API_URI) {
         var path = "/user.php";
         return {
-            login: function (nick, pass) {
-                console.log(nick, pass);
-                if(nick == "" || pass == "") {
-                    console.log("Error, nickname or password empty");
+            login: function (nickname, password, callback) {
+                if(nickname == "" || password == "") {
+                    return callback(null);
                 } else {
-
                     $http({
                         method: 'POST',
                         url: API_URI+path+'/login',
-                        data: {'nickname': nick, 'password': pass}
-                    }).then(function successCallback(response) {
-                        console.log("SUCCESS");
-                        console.log(response.data);
-                    }, function errorCallback(response) {
-                        console.log("ERROR");
+                        data: {'nickname': nickname, 'password': password}
+                    }).then(function (user) {
+                        if(!user.data) {
+                            return callback(null);
+                        }
+                        return callback(user.data);
                     });
-
-
-
-                    /*$http.post(API_URI+path+"/login", {nickname: nick, password: pass}).then(function successCallback(response) {
-                        console.log("SUCCESS");
-                        console.log(response.data);
-                    }, function errorCallback(response) {
-                        console.log("ERROR");
-                    });*/
                 }
+            },
+            register: function (nickname, mail, password, callback) {
+                $http({
+                    method: 'POST',
+                    url: API_URI+path+'/register',
+                    data:
+                    {
+                        'nickname': nickname,
+                        'mail': mail,
+                        'password': password
+                    }
+                }).then(function (resultat) {
+                    if(!resultat.data) {
+                        return callback(null);
+                    }
+                    return callback(resultat.data);
+                })
+            },
+            logout: function (callback) {
+                return callback(StorageService.removeUser());
+            },
+            getByNickname: function (nickname, callback) {
+                $http({
+                    method: 'GET',
+                    url: API_URI+path+"/getByNickname/"+nickname
+                }).then(function (user) {
+                    if(!user.data) {
+                        return callback(null);
+                    }
+                    return callback(user.data);
+                })
             }
         };
 }]);

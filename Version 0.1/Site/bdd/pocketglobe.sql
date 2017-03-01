@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 16 Février 2017 à 21:54
--- Version du serveur :  5.7.11
--- Version de PHP :  7.0.4
+-- Généré le :  Mer 01 Mars 2017 à 22:36
+-- Version du serveur :  5.7.14
+-- Version de PHP :  5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -50,7 +50,6 @@ CREATE TABLE `fd_title` (
 
 CREATE TABLE `fiche` (
   `id_fiche` bigint(20) UNSIGNED NOT NULL,
-  `id_user` bigint(20) NOT NULL,
   `id_folder` bigint(20) NOT NULL,
   `title` varchar(50) NOT NULL,
   `visited` tinyint(1) NOT NULL,
@@ -79,7 +78,9 @@ CREATE TABLE `field` (
 
 CREATE TABLE `folder` (
   `id_folder` bigint(20) UNSIGNED NOT NULL,
-  `name_folder` varchar(50) NOT NULL
+  `id_user` bigint(20) NOT NULL,
+  `name_folder` varchar(50) NOT NULL,
+  `defaut` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -131,8 +132,7 @@ ALTER TABLE `field`
 --
 ALTER TABLE `folder`
   ADD PRIMARY KEY (`id_folder`),
-  ADD UNIQUE KEY `id_folder` (`id_folder`),
-  ADD UNIQUE KEY `name_folder` (`name_folder`);
+  ADD UNIQUE KEY `id_folder` (`id_folder`);
 
 --
 -- Index pour la table `user`
@@ -161,17 +161,17 @@ ALTER TABLE `fd_title`
 -- AUTO_INCREMENT pour la table `fiche`
 --
 ALTER TABLE `fiche`
-  MODIFY `id_fiche` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_fiche` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 --
 -- AUTO_INCREMENT pour la table `folder`
 --
 ALTER TABLE `folder`
-  MODIFY `id_folder` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_folder` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

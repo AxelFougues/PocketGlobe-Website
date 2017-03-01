@@ -5,7 +5,7 @@
 
 'use strict';
 
-angular.module('pocketGlobe', ['ngStorage', 'ngDialog', 'ngMaterial']);
+angular.module('pocketGlobe', ['ngStorage', 'ngDialog', 'ngMaterial', 'toastr']);
 
-angular.module('pocketGlobe').constant('API_URI', 'http://localhost:8080/PocketGlobe/src/API');
+angular.module('pocketGlobe').constant('API_URI', 'http://localhost/src/API');
 

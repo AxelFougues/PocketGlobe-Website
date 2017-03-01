@@ -1,0 +1,41 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+
+.container {
+    width: inherit;
+    height: inherit;
+}
+
+.MapContainer {
+    float: right;
+    width: 94%;
+}
+
+.MenuContainer {
+    height: 80vh;
+}
+
+.MapOpened {
+    width: 85%;
+}
+
+.MenuOpened {
+    width: 15%;
+}
+
+#map {
+    width: 100%;
+    height: 90vh;
+}
+
+.titre {
+    width: 8vw;
+    margin-left: 20%;
+}
+
+svg {
+    fill: inherit;
+}

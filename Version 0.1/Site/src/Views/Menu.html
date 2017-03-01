@@ -1,0 +1,18 @@
+<div ng-controller="MenuController"  class="MenuContainer" ng-class="{'MenuOpened': menu}">
+    <div id="menu">
+        <md-list>
+            <md-list-item>
+                <md-button class="md-icon-button" ng-click="toggle()" aria-label="toggle button">
+                    <md-icon md-svg-src="Images/icones/menu-burger.svg"></md-icon>
+                </md-button>
+            </md-list-item>
+            <md-list-item>
+                <md-button ng-class="{'md-icon-button': !menu}" ng-click="logout()" aria-label="disconnect button">
+                    <span ng-if="menu">Déconnexion</span>
+                    <md-icon style="color: red" md-svg-src="Images/icones/logout.svg"></md-icon>
+                </md-button>
+            </md-list-item>
+
+        </md-list>
+    </div>
+</div>

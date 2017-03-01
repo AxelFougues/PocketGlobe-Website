@@ -1,0 +1,18 @@
+<div style="padding:20px;">
+    <form novalidate >
+        <md-input-container class="md-block">
+            <input type="text" ng-model="editedFiche.title" placeholder="Titre" md-auto-focus="on">
+        </md-input-container>
+        <md-input-container class="md-block">
+            <md-select ng-model="editedFiche.id_folder">
+                <md-option ng-selected="folder.id_folder === editedFiche.id_folder ? true : false" ng-value="folder.id_folder" ng-repeat="folder in folders">{{folder.name_folder}}</md-option>
+            </md-select>
+        </md-input-container>
+        <md-checkbox ng-model="editedFiche.visited" aria-label="visited?">
+            Déjà visité ?
+        </md-checkbox>
+        <md-input-container class="md-block">
+            <md-button type="submit" class="md-raised md-accent" ng-click="editFiche()" aria-label="Edit Button">Modifier</md-button>
+        </md-input-container>
+    </form>
+</div>

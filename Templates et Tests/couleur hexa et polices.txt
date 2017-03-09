@@ -1,0 +1,4 @@
+gris : #595959
+rouge : #BC1C1C
+
+police utilisées : Segoe UI Light

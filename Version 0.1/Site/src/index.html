@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pocketGlobe">
+    <head>
+        <meta charset="UTF-8">
+        <title>Pocket Globe</title>
+        <link rel="stylesheet" href="Styles/ngDialog/ngDialog.css">
+        <link rel="stylesheet" href="Styles/ngDialog/ngDialog-theme-default.css">
+        <link rel="stylesheet" href="Styles/angular-material/angular-material.css">
+        <link rel="stylesheet" href="Styles/angular-toastr/angular-toastr.min.css">
+        <link rel="stylesheet" href="Styles/index.css">
+
+        <script src="Scripts/lib/angular/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.js"></script>
+        <script src="Scripts/lib/ngStorage/ngStorage.js"></script>
+        <script src="Scripts/lib/angular-local-storage/dist/angular-local-storage.js"></script>
+        <script src="Scripts/lib/ngDialog/js/ngDialog.js"></script>
+        <script src="Scripts/lib/angular-material/angular-material.js"></script>
+        <script src="Scripts/lib/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiuAHP3D9TAfBZUnQRfyGtxrJGyIwyVjM">
+        </script>
+
+        <script src="index.js"></script>
+        <script src="Scripts/Service/StorageService.js"></script>
+        <script src="Scripts/Controllers/IndexController.js"></script>
+        <script src="Scripts/Controllers/MenuController.js"></script>
+        <script src="Scripts/Controllers/MapController.js"></script>
+        <script src="Scripts/Controllers/HeaderController.js"></script>
+        <script src="Scripts/Controllers/FicheController.js"></script>
+        <script src="Scripts/Models/UserModel.js"></script>
+        <script src="Scripts/Models/FicheModel.js"></script>
+        <script src="Scripts/Models/FolderModel.js"></script>
+
+
+    </head>
+
+    <body ng-controller="index">
+
+        <div ng-if="storage.getUser()===null" class="jumbotron">
+            <md-input-container>
+                <md-button ng-click="showDialog('login')" class="md-raised md-accent">Login</md-button>
+            </md-input-container>
+            <md-input-container>
+                <md-button ng-click="showDialog('register')" class="md-raised md-accent">Register</md-button>
+            </md-input-container>
+        </div>
+
+        <div ng-if="storage.getUser()!==null">
+            <div ng-include="Header"></div>
+            <div ng-include="Map"></div>
+            <div ng-include="Menu" class="MenuContainer"></div>
+            <div ng-include="Fiche"></div>
+
+        </div>
+
+
+
+    </body>
+</html>

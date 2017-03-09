@@ -1,0 +1,27 @@
+
+<div ng-controller="FicheController">
+    <md-button class="md-raised md-accent" ng-click="showDialog('fiche')">Fiche</md-button>
+    <md-button class="md-raised md-accent" ng-click="showDialog('folder')">Dossier</md-button>
+
+    <md-content class="md-padding">
+        <md-tabs md-selected="selectedIndex" md-border-bottom="" md-dynamic-height>
+            <md-tab ng-repeat="folder in folders" label="{{folder.name_folder}}">
+                <div style="padding: 25px; text-align: center;">
+                    <md-list>
+                        <md-list-item ng-repeat-start="fiche in fiches" ng-click="toggleFiche($index)">
+                            {{fiche.title}}
+                            <md-button class="md-secondary" ng-click="showEditDialog(fiche)" aria-label="Edit Button"><md-icon md-svg-src="Images/icones/edit.svg"></md-icon></md-button>
+                            <md-button class="md-secondary" ng-click="deleteFiche(fiche)" aria-label="Delete button"><md-icon md-svg-src="Images/icones/delete.svg"></md-icon></md-button>
+                        </md-list-item>
+                        <md-content ng-if="selectedFiche==$index" ng-repeat-end>
+                            <h1>{{fiche.title}}</h1>
+                            <p ng-if="fiche.visited == 1">Déjà visité</p>
+                            <p ng-if="fiche.visited == 0">Jamais visité</p>
+                            <p ng-if="fiche.latitude != null && fiche.longitude != null">Lat: {{fiche.latitude}} Long: {{fiche.longitude}}</p>
+                        </md-content>
+                    </md-list>
+                </div>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>

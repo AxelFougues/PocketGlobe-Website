@@ -1,33 +1,34 @@
-DÉFINITION DU PROJET
-Axel Fougues – Chef de projet (Design & Interface Graphique)
-Vinchenzo Guibert – Développeur web & Base de données
-Robin Giraud – Développeur web & Base de données
-Mamadou Bah – Développeur application mobile
-Le Produit :
+PROJECT DEFINITION
+Axel Fougues - Project Manager (Design & Graphic Interface)
+Vinchenzo Guibert - Web & Database Developer
+Robin Giraud - Web & Database Developer
+Mamadou Bah - Mobile application developer
 
-Un site internet utilitaire de sauvegarde d’édition et de visualisation d’informations liées un un compte utilisateur.
+The product :
 
-L’utilitaire doit permettre a l’utilisateur de stocker de façon rapide et synchronisée les localisations de son choix accompagnées d’informations de type texte et autres sous forme de ‘fiches’ . L’utilitaire est constitué d’un site comportant une interface simple et accessible sans connaissance des BDD. Le site offre des possibilités de visualisation, d’édition et de création de fiches.
-L’application a pour objectif accessible d’un maximum de fonctionnalités synchronisées au site de façon portable et adaptée au public ‘aventurier ou voyageur’ visé.
+A utility website for saving editing and viewing information linked to a user account.
 
-Objectifs et Attentes Principales :
+The utility must allow the user to store quickly and synchronously the locations of his choice along with text and other information in the form of "cards". The utility consists of a site with a simple and accessible interface without knowledge of databases. The site offers possibilities for viewing, editing and creating records.
+The accessible objective of the application is to achieve a maximum of functionality synchronized with the site in a portable manner and adapted to the target audience "adventurer or traveler".
 
--Une interface rapide et intuitive
+Main Objectives and Expectations:
 
--Stockage permanent et sur des informations de l'utilisateur
+-A fast and intuitive interface
 
--Gestion et accès facile aux données
+-Permanent storage and on user information
 
--Un utilitaire modulaire et personnalisable.
+-Management and easy access to data
 
-ÉTUDE DE MARCHÉ
+-A modular and customizable utility.
 
-Applications Similaires existantes :
+MARKET RESEARCH
 
-Le type d’application de ‘voyage’ est le plus souvent orienté sur l’aspect partage social (publication d’expériences sur réseaux sociaux etc..) ou sur l’aspect ‘journal intime’ (possibilité de rédiger son voyage sous forme d’histoire).  
-Les applications de type ‘stockage de données’ son peu nombreuses et peu adaptée a l’utilisation voulue. 
-Dans les deux cas les possibilités d’export ou de synchronisation sont souvent limitées et les fonctionnalités payantes.
+Existing Similar Applications:
 
-Conclusion : 
+The type of 'travel' application is most often oriented on the social sharing aspect (publication of experiences on social networks etc.) or on the 'intimate diary' aspect (possibility of writing your trip in the form of a 'story).
+Data storage type applications are few and far between and unsuitable for the intended use.
+In both cases, the possibilities for exporting or synchronizing are often limited and the features are chargeable.
 
-L’utilitaire proposé n’est pas présent sur le marché. Sa variété d’utilisations possibles et ses fonctionnalités simples et personnalisables s’offre a un public varié : voyageurs, pratiquants de sports, professionnels sur le terrain, organisateurs d’événements etc...
+Conclusion:
+
+The proposed utility is not available on the market. Its variety of possible uses and its simple and customizable features are available to a diverse audience: travelers, sports practitioners, professionals in the field, event organizers, etc.
